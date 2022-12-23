@@ -56,9 +56,9 @@ public class Server {
             }
         }
 
-        public static void main(String[] args) {
-            EchoClientHandler server = new EchoClientHandler();
-            server.start();
+        public static void main(String[] args) throws IOException{
+            Server server = new Server();
+            server.start(55552);
         }
     }
 }
