@@ -10,8 +10,6 @@ import java.util.Scanner;
 
 public class GreetClient {
     private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
     private PrintWriter outCurrency1;
     private PrintWriter outCurrency2;
     private PrintWriter outAmountOfMoney;
@@ -19,12 +17,10 @@ public class GreetClient {
 
     public void startConnection(String ip, int port) throws IOException {
         clientSocket = new Socket(ip, port);
-        out = new PrintWriter(clientSocket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         outCurrency1 = new PrintWriter(clientSocket.getOutputStream());
         outCurrency2 = new PrintWriter(clientSocket.getOutputStream());
-        inpExchangedCurrency = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         outAmountOfMoney = new PrintWriter(clientSocket.getOutputStream());
+        inpExchangedCurrency = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
 
     public void sendCurrency1(String currency1){
@@ -34,27 +30,14 @@ public class GreetClient {
         outCurrency2.println(currency2);
     }
 
+    public void sendAmountOfMoney(String amountOfMoney){
+        outAmountOfMoney.println(amountOfMoney);
+    }
     public void getExchangedCurrency() throws IOException{
         inpExchangedCurrency.readLine();
     }
 
-    public void sendAmountOfMoney(String amountOfMoney){
-        outAmountOfMoney.println(amountOfMoney);
-    }
-
-    public void sendMessage(String msg) throws IOException{
-        out.println(msg);
-        String resp = in.readLine();
-        System.out.printf("Sent message %s", resp);
-    }
-
-    public void getMessage() throws IOException{
-        String response = in.readLine();
-        System.out.println(response);
-    }
     public void stopConnection() throws IOException{
-        in.close();
-        out.close();
         clientSocket.close();
     }
 
